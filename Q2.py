@@ -7,6 +7,8 @@ import scipy.io
 import matplotlib.pyplot as plt
 import pickle
 import sys
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 def learnOLERegression(X,y):
     # Inputs:                                                         
@@ -35,6 +37,7 @@ def testOLERegression(w,Xtest,ytest):
 
     return mse
 
+
 # Main script
 if __name__ == "__main__":
     
@@ -61,8 +64,3 @@ if __name__ == "__main__":
 
     print('MSE for testing without intercept '+str(mle))
     print('MSE for testing with intercept '+str(mle_i))
-
-    
-
-
-    
