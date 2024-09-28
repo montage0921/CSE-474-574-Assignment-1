@@ -18,10 +18,8 @@ def learnOLERegression(X,y):
     # Output: 
     # w = d x 1 
 
-    w=np.linalg.inv(X.T @ X)@X.T@y
-    
-	
-    # IMPLEMENT THIS METHOD                                                   
+    # IMPLEMENT THIS METHOD       
+    w=np.linalg.inv(X.T @ X)@X.T@y                                            
     return w
 
 # PROBLEM 3 #
@@ -44,10 +42,11 @@ def testOLERegression(w,Xtest,ytest):
     # ytest = X x 1
     # Output:
     # mse
-    y_predict=Xtest@w
-    mse=np.mean((ytest-y_predict)**2)
+
     
     # IMPLEMENT THIS METHOD
+    y_predict=Xtest@w
+    mse=np.mean((ytest-y_predict)**2)
 
     return mse
 
@@ -56,10 +55,15 @@ def regressionObjVal(w, X, y, lambd):
 
     # compute squared error (scalar) and gradient of squared error with respect
     # to w (vector) for the given data X and y and the regularization parameter
-    # lambda                                                                  
+    # lambda                                                                 
 
     # IMPLEMENT THIS METHOD
-    error_grad = error_grad.flatten()                                
+    w = w.reshape(-1, 1)
+    residual=(y-X@w) # calculate residual for each rv
+    error=0.5*np.sum(residual**2)/X.shape[0]+0.5*lambd*np.sum(w**2)
+    error_grad = -(X.T @ residual) / X.shape[0] + lambd * w
+
+    error_grad = error_grad.flatten()                     
     return error, error_grad
 
 
@@ -168,6 +172,12 @@ if __name__ == "__main__":
     plt.title('MSE for Test Data')
     plt.legend(['Using scipy.minimize','Direct minimization'])
     plt.show()
+
+    # OWN_CODE STARTS #
+    a=np.argmin(mses4)
+    b=lambdas[a]
+    print("the optimal lamda is: "+str(b))
+    # OWN_CODE ENDS #
 
 
 
